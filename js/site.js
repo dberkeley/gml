@@ -1,8 +1,6 @@
 // JavaScript Document
-
-var base_site="http://stage3.guardian.co.tt/mobileapps/";
-
-
+$(document).ready(function(){
+	
 push = window.plugins.pushNotification;
 
 // Callback for when a device has registered with Urban Airship.
@@ -43,42 +41,5 @@ push.isPushEnabled(function (enabled) {
     }
 })
 
-
-
-$(document).ready(function(){
-	$("#menu").click(function(){
-		$( "#mypanel" ).panel( "open", "swipeClose", false );
-	});
 	
 })
-
-function views(name){
-	
-	var feed = base_site+"views/queues/?format_output=1&display_id="+name;
-	$.ajax({
-	  dataType: 'jsonp',
-	  url: feed,
-	  success: function (data) {
-		 $('article').html(data);
-		 
-	 }
-	});
-	
-}
-
-function urls(uri){
-	var feed = base_site+"url/retrieve";
-	$.ajax({
-	  dataType: 'jsonp',
-	  url: feed,
-	  success: function (data) {
-		 $.each( data, function( key, value ) {
-			 if ("/guardianm/"+value.alias == uri){
-			 alert(value.source);
-		 }
-		 })
-		 
-	 }
-	});
-
-}
