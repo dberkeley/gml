@@ -40,7 +40,7 @@
 	<preference name="com.urbanairship.development_app_key" value="TnpKgXQIQAakcmZfKscgTQ" />
 	<preference name="com.urbanairship.development_app_secret" value="msMUNLCGRfajPNuCZez_Gw" />
 	<preference name="com.urbanairship.in_production" value="false" />
-	<preference name="com.urbanairship.gcm_sender" value="AIzaSyBoVLRq5XkdYZl8iATrL6mDWX8E-q7sGKE" />
+	<preference name="com.urbanairship.gcm_sender" value="AIzaSyAmIDLh6vGQdC5L-v_Okw9iEMqeea749mU" />
 	
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
