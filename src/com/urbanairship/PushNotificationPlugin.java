@@ -1,8 +1,7 @@
-package com.urbanairship.phonegap;
+package com.urbanairship.phonegap.plugins;
 
 import android.os.RemoteException;
 
-import com.urbanairship.Autopilot;
 import com.urbanairship.Logger;
 import com.urbanairship.UAirship;
 import com.urbanairship.location.LocationPreferences;
@@ -11,10 +10,8 @@ import com.urbanairship.push.PushManager;
 import com.urbanairship.push.PushPreferences;
 import com.urbanairship.util.ServiceNotBoundException;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,41 +26,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PushNotificationPlugin extends CordovaPlugin {
 
-    private final static List<String> knownActions = Arrays.asList("enablePush", "disablePush", "enableLocation", "disableLocation", "enableBackgroundLocation",
+    final static List<String> knownActions = Arrays.asList("enablePush", "disablePush", "enableLocation", "disableLocation", "enableBackgroundLocation",
             "disableBackgroundLocation", "isPushEnabled", "isSoundEnabled", "isVibrateEnabled", "isQuietTimeEnabled", "isInQuietTime", "isLocationEnabled",
             "getIncoming", "getPushID", "getQuietTime", "getTags", "getAlias", "setAlias", "setTags", "setSoundEnabled", "setVibrateEnabled",
             "setQuietTimeEnabled", "setQuietTime", "recordCurrentLocation");
 
-    public static  String incomingAlert = "";
-    public static Map<String, String> incomingExtras = new HashMap<String, String>();
+    final static String TAG = PushNotificationPlugin.class.getSimpleName();
 
-    // Used to raise pushes and registration from the PushReceiver
-    private static PushNotificationPlugin instance;
+    static PushNotificationPlugin instance = new PushNotificationPlugin();
+    PushPreferences pushPrefs = PushManager.shared().getPreferences();
+    LocationPreferences locationPrefs = UALocationManager.shared().getPreferences();
 
-    private PushPreferences pushPrefs;
-    private LocationPreferences locationPrefs;
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
+    static public String incomingAlert = "";
+    static public Map<String, String> incomingExtras = new HashMap<String, String>();
 
     public PushNotificationPlugin() {
         instance = this;
     }
 
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-        Logger.info("Initializing PushNotificationPlugin");
-        Autopilot.automaticTakeOff(cordova.getActivity().getApplication());
-        pushPrefs = PushManager.shared().getPreferences();
-        locationPrefs = UALocationManager.shared().getPreferences();
+    public static PushNotificationPlugin getInstance() {
+        return instance;
     }
 
-    private static JSONObject notificationObject(String message,
+    private JSONObject notificationObject(String message,
             Map<String, String> extras) {
         JSONObject data = new JSONObject();
         try {
@@ -75,19 +64,15 @@ public class PushNotificationPlugin extends CordovaPlugin {
         return data;
     }
 
-    static void raisePush(String message, Map<String, String> extras) {
-        if (instance == null) {
-            return;
-        }
-
+    public void raisePush(String message, Map<String, String> extras) {
         JSONObject data = notificationObject(message, extras);
         String js = String.format(
-                "window.plugins.pushNotification.pushCallback(%s);",
+                "window.pushNotification.pushCallback(%s);",
                 data.toString());
         Logger.info("Javascript Calling back: " + js);
 
         try {
-            instance.webView.sendJavascript(js);
+            this.webView.sendJavascript(js);
         } catch (NullPointerException npe) {
             Logger.info("unable to send javascript in raisepush");
         } catch (Exception e) {
@@ -95,11 +80,7 @@ public class PushNotificationPlugin extends CordovaPlugin {
         }
     }
 
-    static void raiseRegistration(Boolean valid, String pushID) {
-        if (instance == null) {
-            return;
-        }
-
+    public void raiseRegistration(Boolean valid, String pushID) {
         JSONObject data = new JSONObject();
         try {
             data.put("valid", valid);
@@ -108,12 +89,12 @@ public class PushNotificationPlugin extends CordovaPlugin {
             Logger.error("Error In raiseRegistration", e);
         }
         String js = String.format(
-                "window.plugins.pushNotification.registrationCallback(%s);",
+                "window.pushNotification.registrationCallback(%s);",
                 data.toString());
         Logger.info("Javascript Calling back: " + js);
 
         try {
-            instance.webView.sendJavascript(js);
+            this.webView.sendJavascript(js);
         } catch (NullPointerException npe) {
             Logger.info("unable to send javascript in raiseRegistration");
         } catch (Exception e) {
@@ -123,26 +104,22 @@ public class PushNotificationPlugin extends CordovaPlugin {
 
 
     @Override
-    public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
         if (!knownActions.contains(action)) {
             Logger.debug("Invalid action: " + action);
             return false;
         }
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Logger.debug("Plugin Execute: " + action);
-                    Method method = PushNotificationPlugin.class.getDeclaredMethod(action, JSONArray.class, CallbackContext.class);
-                    method.invoke(PushNotificationPlugin.this, data, callbackContext);
-                } catch (Exception e) {
-                    Logger.error(e);
-                }
-            }
-        });
+        try {
+            Logger.debug("Plugin Execute: " + action);
+            Method method = PushNotificationPlugin.class.getDeclaredMethod(action, JSONArray.class, CallbackContext.class);
+            method.invoke(this, data, callbackContext);
+            return true;
+        } catch (Exception e) {
+            Logger.error(e);
+        }
 
-        return true;
+        return false;
     }
 
     // Actions
@@ -150,6 +127,7 @@ public class PushNotificationPlugin extends CordovaPlugin {
     void enablePush(JSONArray data, CallbackContext callbackContext) {
         if (requirePushServiceEnabled(callbackContext)) {
             PushManager.enablePush();
+            PushManager.shared().setIntentReceiver(PushNotificationPluginIntentReceiver.class);
             callbackContext.success();
         }
     }
