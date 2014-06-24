@@ -38,12 +38,12 @@
 
     <access origin="*"/>
 	
-	<gap:splash src="splash.png" />
+
 	
-	<gap:splash src="assets/www/img/Now_Loading.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="assets/www/img/Now_Loading.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="assets/www/img/Now_Loading.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="assets/www/img/Now_Loading.png" gap:platform="android" gap:density="xhdpi" />
+	<gap:splash src="res/screen/android/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="res/screen/android/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="res/screen/android/screen-hdpi-portrait.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
 	
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
