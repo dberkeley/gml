@@ -52,6 +52,8 @@
 	  <preference name="SplashScreenDelay" value="10000" />
       <preference name="BackgroundColor" value="0xff0000ff"/>
 	  <preference name="useBrowserHistory" value="true" />
+	  <preference name="InAppBrowserStorageEnabled" value="true"/>
+
 	  
 
   <!--		<preference name="loadUrlTimeoutValue" value="20000" />
