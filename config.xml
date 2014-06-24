@@ -50,13 +50,8 @@
 	  <preference name="SplashScreen" value="screen" />
 	  <preference name="SplashScreenDelay" value="10000" />
       <preference name="BackgroundColor" value="0xff0000ff"/>
+	  <preference name="useBrowserHistory" value="true" />
 	  
-    <plugin name="Device" value="org.apache.cordova.Device"/>
-    <plugin name="Accelerometer" value="org.apache.cordova.AccelListener"/>
-    <plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager"/>
-    <plugin name="Notification" value="org.apache.cordova.Notification"/>
-    <plugin name="Storage" value="org.apache.cordova.Storage"/>
-    <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
 
   <!--		<preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
