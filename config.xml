@@ -21,7 +21,7 @@
 		xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "Trinidad Guardian"
         version   = "1.0.0">
-    <name>Trinidad Guardian</name>
+ 	<name>Trinidad Guardian</name>
 
     <description>
         Get your latest news from the Trinidad Guardian
@@ -30,10 +30,12 @@
     <author href="http://www.guardian.co.tt" email="dewayne.berkeley@guardian.co.tt">
         Dewayne Berkeley
     </author>
-	<feature name="PushNotificationPlugin">
-    	<param name="android-package" value="com.urbanairship.phonegap.PushNotificationPlugin" />
-    	<param name="onload" value="true" />
-	</feature>
+	
+	<feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+	
+
     <access origin="*"/>
 	
 	<gap:splash src="splash.png" />
@@ -44,12 +46,11 @@
 	
 	<icon src="logo.png" />
 	
-      <preference name="loglevel" value="DEBUG" />
-      <preference name="splash-screen" value="splash.png" />
-      <preference name="show-splash-screen-spinner" value="true" />
-      <preference name="auto-hide-splash-screen" value="true" />
-	  <preference name="splash-screen-duration" value="5000" />
-      <preference name="BackgroundColor" value="0x33333333" />
+      <preference name="Fullscreen" value="true" />
+	  <preference name="SplashScreen" value="screen" />
+	  <preference name="SplashScreenDelay" value="10000" />
+      <preference name="BackgroundColor" value="0xff0000ff"/>
+
   <!--		<preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
       <preference name="disallowOverscroll" value="true" />
