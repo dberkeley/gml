@@ -38,8 +38,6 @@
 
     <access origin="*"/>
 	
-	<gap:splash src="splash.png" />
-	
 	
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
