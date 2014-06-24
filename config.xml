@@ -20,7 +20,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "Trinidad Guardian"
-        version   = "2.0.0">
+        version   = "1.0.0">
     <name>Trinidad Guardian</name>
 
     <description>
@@ -35,22 +35,21 @@
     	<param name="onload" value="true" />
 	</feature>
     <access origin="*"/>
+	
 	<gap:splash src="splash.png" />
 	
-	<preference name="com.urbanairship.development_app_key" value="TnpKgXQIQAakcmZfKscgTQ" />
-	<preference name="com.urbanairship.development_app_secret" value="msMUNLCGRfajPNuCZez_Gw" />
-	<preference name="com.urbanairship.in_production" value="false" />
-	<preference name="com.urbanairship.gcm_sender" value="AIzaSyAmIDLh6vGQdC5L-v_Okw9iEMqeea749mU" />
 	
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
     <content src="index.html" />
 	
+	<icon src="logo.png" />
+	
       <preference name="loglevel" value="DEBUG" />
       <preference name="splash-screen" value="splash.png" />
       <preference name="show-splash-screen-spinner" value="true" />
-     <preference name="auto-hide-splash-screen" value="true" />
+      <preference name="auto-hide-splash-screen" value="true" />
 	  <preference name="splash-screen-duration" value="5000" />
-      <preference name="backgroundColor" value="0xffffffff" />
+      <preference name="BackgroundColor" value="0x33333333" />
   <!--		<preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
       <preference name="disallowOverscroll" value="true" />
