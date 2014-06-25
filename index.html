@@ -1,24 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html class="ui-mobile">
 
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Phonegap Sample App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trinidad Guardian</title>
 
-    <link href="css/jquery.mobile-1.1.1.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jquery.mobile-1.4.2.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery.mobile-1.1.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js.js"></script>
 
-    <script type="text/javascript" src="phonegap.js"></script>
-    <script type="text/javascript" src="PushNotification.js"></script>
 
 </head>
-  <body>
-  <div data-role="page" id="page">
+<body class="ui-mobile-viewport ui-overlay-b">
+		
+<div data-role="page" class="ui-page ui-page-theme-b ui-page-active">
+ 
+	<div data-role="header" class="ui-header ui-bar-inherit" role="banner">
+		<h1>Page Title</h1>
+        <a href="#" data-icon="gear" class="ui-btn-right">Options</a>
+	</div><!-- /header -->
 
- milo
+	<div role="main" class="ui-content">
+		<p>Page content goes here.</p>
+	</div><!-- /content -->
 
-  </div>
+	<div data-role="footer" class="ui-footer ui-bar-b" data-role="footer" role="contentinfo" data-theme="b">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
 </body>
 </html>
